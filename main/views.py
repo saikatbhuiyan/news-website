@@ -4,10 +4,13 @@ from .models import Main
 
 
 def home(request):
-  sitename = "MySite | Home"
-  return render(request, 'front/home.html', {'sitename': sitename})
+  site = Main.objects.get(pk=1)
+
+  # sitename = "MySite | Home"
+  return render(request, 'front/home.html', {'site': site})
   
 def about(request):
-  sitename = "MySite | About"
+  # sitename = "MySite | About"
+  site = Main.objects.get(pk=1)
 
-  return render(request, 'front/about.html', {'sitename': sitename})
+  return render(request, 'front/about.html', {'site': site})
