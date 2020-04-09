@@ -4,9 +4,10 @@ from .models import Main
 
 
 def home(request):
-  
-  return render(request, 'front/home.html')
+  sitename = "MySite | Home"
+  return render(request, 'front/home.html', {'sitename': sitename})
   
 def about(request):
-  
-  return render(request, 'front/about.html')
+  sitename = "MySite | About"
+
+  return render(request, 'front/about.html', {'sitename': sitename})
