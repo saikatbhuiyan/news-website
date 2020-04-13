@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # Loacl
     'main',
+    'news',
 ]
 
 MIDDLEWARE = [
