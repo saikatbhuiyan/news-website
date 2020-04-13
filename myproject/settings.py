@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # 3rd party
 
-    # Loacl
+    # Loacl Apps
     'main',
     'news',
 ]

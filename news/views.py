@@ -1,5 +1,7 @@
 import datetime
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.files.storage import FileSystemStorage
+
 from main.models import Main
 from .models import News
 
@@ -42,9 +44,31 @@ def news_add(request):
             error = "All Fields Requirded"
             return render(request, 'back/error.html', {'error': error})
 
-          b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, catname='Sport', date=today,
-                   writer=request.user, catid=0, show=0)
-          b.save()
-          return redirect('news_list')
+          try:
+              myfile = request.FILES['myfile']
+              fs = FileSystemStorage()
+              filename = fs.save(myfile.name, myfile)
+              url = fs.url(filename)
+
+              if str(myfile.content_type).startswith("image"):
+
+                  if myfile.size < 500000 :
+
+                      b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, picname=filename, picurl=url, catname='Sport', date=today,
+                               writer=request.user, catid=0, show=0)
+                      b.save()
+                      return redirect('news_list')
+
+                  else:
+                      error = "File Size Is More Than 5 MB!"
+                      return render(request, 'back/error.html', {'error': error})
+
+              else:
+                  error = "File Type Is Not Supported"
+                  return render(request, 'back/error.html', {'error': error})
+
+          except:
+              error = "Please upload a image!"
+              return render(request, 'back/error.html', {'error': error})
 
     return render(request, 'back/news_add.html')
