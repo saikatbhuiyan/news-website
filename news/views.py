@@ -11,4 +11,8 @@ def news_detail(request, word):
   site = Main.objects.get(pk=1)
 
   return render(request, 'front/news_detail.html', {'news': news, 'site': site})
-  
+
+def news_list(request):
+  news = News.objects.all()
+
+  return render(request, 'back/news_list.html', {'news': news})
