@@ -4,7 +4,7 @@ from django.core.files.storage import FileSystemStorage
 
 from main.models import Main
 from .models import News
-
+from subcat.models import SubCat
 
 def news_detail(request, word):
 
@@ -32,15 +32,16 @@ def news_add(request):
     today = str(year) + "/" + str(month) + "/" + str(day)
     time = str(now.hour) + ":" + str(now.minute)
 
+    cat = SubCat.objects.all()
 
     if request.method == 'POST':
 
           newstitle = request.POST.get('newstitle')
-          # newscat = request.POST.get('newscat')
+          newscat = request.POST.get('newscat')
           newstxtshort = request.POST.get('newstxtshort')
           newstxt = request.POST.get('newstxt')
 
-          if newstitle == "" or newstxtshort == "" or newstxt == "" : #or newscat == ""
+          if newstitle == "" or newstxtshort == "" or newstxt == "" or newscat == "":
             error = "All Fields Requirded"
             return render(request, 'back/error.html', {'error': error})
 
@@ -53,9 +54,9 @@ def news_add(request):
               if str(myfile.content_type).startswith("image"):
 
                   if myfile.size < 500000 :
-
-                      b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, picname=filename, picurl=url, catname='Sport', date=today,
-                               time=time, writer=request.user, catid=0, show=0)
+                      catname = SubCat.objects.get(pk=newscat).name
+                      b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, picname=filename, picurl=url, catname=catname, date=today,
+                               time=time, writer=request.user, catid=newscat, show=0)
                       b.save()
                       return redirect('news_list')
 
@@ -72,7 +73,7 @@ def news_add(request):
               error = "Please upload a image!"
               return render(request, 'back/error.html', {'error': error})
 
-    return render(request, 'back/news_add.html')
+    return render(request, 'back/news_add.html', {'cat': cat})
 
 
 def news_delete(request, pk):
