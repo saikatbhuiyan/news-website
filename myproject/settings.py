@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Loacl Apps
     'main',
     'news',
+    'cat',
 ]
 
 MIDDLEWARE = [
