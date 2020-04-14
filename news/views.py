@@ -55,7 +55,7 @@ def news_add(request):
                   if myfile.size < 500000 :
 
                       b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, picname=filename, picurl=url, catname='Sport', date=today,
-                               writer=request.user, catid=0, show=0)
+                               time=time, writer=request.user, catid=0, show=0)
                       b.save()
                       return redirect('news_list')
 
@@ -64,6 +64,7 @@ def news_add(request):
                       return render(request, 'back/error.html', {'error': error})
 
               else:
+                  fs.delete(filename)
                   error = "File Type Is Not Supported"
                   return render(request, 'back/error.html', {'error': error})
 
@@ -72,3 +73,18 @@ def news_add(request):
               return render(request, 'back/error.html', {'error': error})
 
     return render(request, 'back/news_add.html')
+
+
+def news_delete(request, pk):
+
+    try:
+        news = News.objects.get(pk=pk)
+        fs = FileSystemStorage()
+        fs.delete(news.picname)
+        news.delete()
+
+    except:
+        error = "Something Wrong!"
+        return render(request, 'back/error.html', {'error': error})
+
+    return redirect('news_list')

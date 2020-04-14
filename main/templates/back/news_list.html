@@ -30,7 +30,7 @@
                                             <th class="text-center">Image</th>
                                             <th>Title</th>
                                             <th>Writer</th>
-                                            <th>Date</th>
+                                            <th>Date & Time</th>
                                             <th>Category</th>
                                             <th>Views</th>
                                             <th class="text-center">Actions</th>
@@ -44,13 +44,13 @@
                                                 <td class="text-center"><img style="display: inline-block; width: 50px; height: 50px" src="{{ cc.picurl }}" alt="avatar" class="img-circle"></td>
                                                 <td>{{ cc.name }}</td>
                                                 <td>{{ cc.writer }}</td>
-                                                <td>{{ cc.date }}</td>
+                                                <td>{{ cc.date }} | {{ cc.time }}</td>
                                                 <td>{{ cc.catname }}</td>
                                                 <td>{{ cc.show }}</td>
                                                 <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                                        <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i>Edit</a>
+                                                        <a href="{% url 'news_del' pk=cc.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Delete</a>
                                                     </div>
                                                 </td>
                                         </tr>
