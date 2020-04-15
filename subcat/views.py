@@ -47,4 +47,4 @@ def subcat_delete(request, pk):
         error = "Something Wrong!"
         return render(request, 'back/error.html', {'error': error})
 
-    return redirect('cat_list')
+    return redirect('subcat_list')
