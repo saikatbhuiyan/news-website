@@ -57,9 +57,17 @@ def news_add(request):
 
                   if myfile.size < 500000 :
                       catname = SubCat.objects.get(pk=newscat).name
+                      ocatid = SubCat.objects.get(pk=newscat).catid
+
                       b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, picname=filename, picurl=url, catname=catname, date=today,
-                               time=time, writer=request.user, catid=newscat, show=0)
+                               time=time, writer=request.user, catid=newscat, ocatid=ocatid, show=0)
                       b.save()
+
+                      count = len(News.objects.filter(ocatid=ocatid))
+                      b = Category.objects.get(pk=ocatid)
+                      b.count = count
+                      b.save()
+
                       return redirect('news_list')
 
                   else:
@@ -84,7 +92,14 @@ def news_delete(request, pk):
         news = News.objects.get(pk=pk)
         fs = FileSystemStorage()
         fs.delete(news.picname)
+        ocatid = News.objects.get(pk=pk).ocatid
+
         news.delete()
+
+        count = len(News.objects.filter(ocatid=ocatid))
+        b = Category.objects.get(pk=ocatid)
+        b.count = count
+        b.save()
 
     except:
         error = "Something Wrong!"
