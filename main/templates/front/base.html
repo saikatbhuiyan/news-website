@@ -111,15 +111,13 @@
 				</div>
 			</div>
 
-		
-			
 			<!--  -->
 			<div class="wrap-logo no-banner container">
 				<!-- Logo desktop -->		
 				<div class="logo">
 					<a href="/"><img src="{% static 'front/images/icons/logo-01.png' %}" alt="LOGO"></a>
 				</div>
-			</div>	
+			</div>
 			
 			<!--  -->
 			<div class="wrap-main-nav">
@@ -2156,7 +2154,7 @@
 			</div>	
 		</div>
   </header>
-  
+
 
 
 
@@ -2286,11 +2284,14 @@
 
 						<ul class="m-t--12">
                             {% for cc in cat %}
-                                <li class="how-bor1 p-rl-5 p-tb-10">
+                                {% if cc.count != 0 %}
+                                  <li class="how-bor1 p-rl-5 p-tb-10">
                                     <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
                                         {{ cc.name }} ({{ cc.count }})
                                     </a>
-                                </li>
+                                  </li>
+                                {% endif %}
+
                             {% endfor %}
 						</ul>
 					</div>
