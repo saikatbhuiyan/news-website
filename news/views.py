@@ -185,3 +185,4 @@ def news_edit(request, pk):
         'name': name,
     }
     return render(request, 'back/news_edit.html', context)
+

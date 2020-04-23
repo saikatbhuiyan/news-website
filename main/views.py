@@ -26,3 +26,8 @@ def about(request):
 def panel(request):
 
   return render(request, 'back/home.html')
+
+
+def login(request):
+
+  return render(request, 'front/login.html')
