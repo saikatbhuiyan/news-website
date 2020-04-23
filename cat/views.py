@@ -25,7 +25,7 @@ def cat_add(request):
           error = "This name already used!"
           return render(request, 'back/error.html', {'error': error})
 
-      cat = Category(name=name)
+      cat = Category(name=name, count=0)
       cat.save()
       return redirect('cat_list')
 
