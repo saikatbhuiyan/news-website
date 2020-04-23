@@ -1,17 +1,18 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Category
 
-
+@login_required(login_url='/login/')
 def cat_list(request):
 
   cat = Category.objects.all()
 
   return render(request, 'back/cat_list.html', {'cat': cat})
 
+@login_required(login_url='/login/')
 def cat_add(request):
   if request.method == 'POST':
       name = request.POST.get('name')
@@ -31,6 +32,7 @@ def cat_add(request):
 
   return render(request, 'back/cat_add.html')
 
+@login_required(login_url='/login/')
 def cat_delete(request, pk):
   try:
     cat = Category.objects.get(pk=pk)

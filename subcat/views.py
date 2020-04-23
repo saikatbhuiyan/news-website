@@ -1,18 +1,18 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import SubCat
 from cat.models import Category
 
-
+@login_required(login_url='/login/')
 def subcat_list(request):
     subcat = SubCat.objects.all()
 
     return render(request, 'back/subcat_list.html', {'subcat': subcat})
 
-
+@login_required(login_url='/login/')
 def subcat_add(request):
 
     cat = Category.objects.all()
@@ -37,7 +37,7 @@ def subcat_add(request):
 
     return render(request, 'back/subcat_add.html', {'cat': cat})
 
-
+@login_required(login_url='/login/')
 def subcat_delete(request, pk):
     try:
         subcat = SubCat.objects.get(pk=pk)

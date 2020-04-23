@@ -1,5 +1,9 @@
 import datetime
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 from django.core.files.storage import FileSystemStorage
 
 from main.models import Main
@@ -7,7 +11,7 @@ from .models import News
 from subcat.models import SubCat
 from cat.models import Category
 
-
+@login_required(login_url='/login/')
 def news_detail(request, word):
 
   news = News.objects.filter(name=word)
@@ -15,11 +19,13 @@ def news_detail(request, word):
 
   return render(request, 'front/news_detail.html', {'news': news, 'site': site})
 
+@login_required(login_url='/login/')
 def news_list(request):
   news = News.objects.all()
 
   return render(request, 'back/news_list.html', {'news': news})
 
+@login_required(login_url='/login/')
 def news_add(request):
     now = datetime.datetime.now()
     year = now.year
@@ -85,7 +91,7 @@ def news_add(request):
 
     return render(request, 'back/news_add.html', {'cat': cat})
 
-
+@login_required(login_url='/login/')
 def news_delete(request, pk):
 
     try:
@@ -107,7 +113,7 @@ def news_delete(request, pk):
 
     return redirect('news_list')
 
-
+@login_required(login_url='/login/')
 def news_edit(request, pk):
     if len(News.objects.filter(pk=pk)) == 0:
         error = "No News Found"

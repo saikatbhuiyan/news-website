@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages, auth
 
 from .models import Main
 from news.models import News
@@ -22,12 +24,32 @@ def about(request):
 
   return render(request, 'front/about.html', {'site': site})
 
-
+@login_required(login_url='/login/')
 def panel(request):
 
   return render(request, 'back/home.html')
 
 
 def login(request):
+  if request.method == 'POST':
+    username = request.POST['username']
+    password = request.POST['password']
+    user = auth.authenticate(username=username, password=password)
 
-  return render(request, 'front/login.html')
+    if user is not None:
+      auth.login(request, user)
+      messages.success(request, 'You are now logged in')
+      return redirect('panel')
+
+    else:
+      messages.error(request, 'Invalid user')
+      return redirect('login')
+  else:
+    return render(request, 'front/login.html')
+
+
+def logout(request):
+  if request.method == 'POST':
+    auth.logout(request)
+    messages.success(request, 'You are now logout')
+  return redirect('login')
