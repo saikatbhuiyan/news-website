@@ -15,6 +15,8 @@ def home(request):
   subcat = SubCat.objects.all()
   lastnews = News.objects.all().order_by('-pk')[:3]
   popnews = News.objects.all().order_by('-show')
+  popnews2 = News.objects.all().order_by('-show')[:3]
+
 
   context = {
     'site': site,
@@ -22,7 +24,8 @@ def home(request):
     'cat': cat,
     'subcat': subcat,
     'lastnews': lastnews,
-    'popnews': popnews
+    'popnews': popnews,
+    'popnews2': popnews2,
   }
 
   # sitename = "MySite | Home"

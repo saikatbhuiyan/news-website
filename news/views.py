@@ -18,7 +18,13 @@ def news_detail(request, word):
   cat = Category.objects.all()
   subcat = SubCat.objects.all()
   lastnews = News.objects.all().order_by('-pk')[:3]
+
   shownews = News.objects.filter(name=word)
+  popnews = News.objects.all().order_by('-show')
+  popnews2 = News.objects.all().order_by('-show')[:3]
+  tagname = News.objects.get(name=word).tag
+  tag = tagname.split(',')
+
 
   try:
     mynews = News.objects.get(name=word)
@@ -28,9 +34,20 @@ def news_detail(request, word):
   except:
       print("Can't Not be add.")
 
+  context = {
+      'shownews': shownews,
+      'site': site,
+      'news': news,
+      'cat': cat,
+      'subcat': subcat,
+      'lastnews': lastnews,
+      'popnews': popnews,
+      'popnews2': popnews2,
+      'tagname': tagname,
+      'tag': tag
+  }
 
-
-  return render(request, 'front/news_detail.html', {'shownews': shownews, 'site': site, 'news': news, 'cat': cat, 'subcat': subcat, 'lastnews': lastnews })
+  return render(request, 'front/news_detail.html', context)
 
 @login_required(login_url='/login/')
 def news_list(request):
@@ -61,6 +78,7 @@ def news_add(request):
           newscat = request.POST.get('newscat')
           newstxtshort = request.POST.get('newstxtshort')
           newstxt = request.POST.get('newstxt')
+          tag = request.POST.get('tag')
 
           if newstitle == "" or newstxtshort == "" or newstxt == "" or newscat == "":
             error = "All Fields Requirded"
@@ -79,7 +97,7 @@ def news_add(request):
                       ocatid = SubCat.objects.get(pk=newscat).catid
 
                       b = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, picname=filename, picurl=url, catname=catname, date=today,
-                               time=time, writer=request.user, catid=newscat, ocatid=ocatid, show=0)
+                               time=time, writer=request.user, catid=newscat, ocatid=ocatid, tag=tag, show=0)
                       b.save()
 
                       count = len(News.objects.filter(ocatid=ocatid))
@@ -142,6 +160,8 @@ def news_edit(request, pk):
           newscat = request.POST.get('newscat')
           newstxtshort = request.POST.get('newstxtshort')
           newstxt = request.POST.get('newstxt')
+          tag = request.POST.get('tag')
+
 
           if newstitle == "" or newstxtshort == "" or newstxt == "" or newscat == "":
                 error = "All Fields Requirded"
@@ -171,6 +191,7 @@ def news_edit(request, pk):
                       b.picurl = url
                       b.catid = newscat
                       b.catname = catname
+                      b.tag = tag
                       b.save()
                       return redirect('news_list')
 
