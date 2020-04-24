@@ -13,11 +13,24 @@ from cat.models import Category
 
 @login_required(login_url='/login/')
 def news_detail(request, word):
-
-  news = News.objects.filter(name=word)
   site = Main.objects.get(pk=1)
+  news = News.objects.all().order_by('-pk')
+  cat = Category.objects.all()
+  subcat = SubCat.objects.all()
+  lastnews = News.objects.all().order_by('-pk')[:3]
+  shownews = News.objects.filter(name=word)
 
-  return render(request, 'front/news_detail.html', {'news': news, 'site': site})
+  try:
+    mynews = News.objects.get(name=word)
+    mynews.show = mynews.show + 1
+    mynews.save()
+
+  except:
+      print("Can't Not be add.")
+
+
+
+  return render(request, 'front/news_detail.html', {'shownews': shownews, 'site': site, 'news': news, 'cat': cat, 'subcat': subcat, 'lastnews': lastnews })
 
 @login_required(login_url='/login/')
 def news_list(request):

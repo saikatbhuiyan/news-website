@@ -14,10 +14,19 @@ def home(request):
   cat = Category.objects.all()
   subcat = SubCat.objects.all()
   lastnews = News.objects.all().order_by('-pk')[:3]
+  popnews = News.objects.all().order_by('-show')
 
+  context = {
+    'site': site,
+    'news': news,
+    'cat': cat,
+    'subcat': subcat,
+    'lastnews': lastnews,
+    'popnews': popnews
+  }
 
   # sitename = "MySite | Home"
-  return render(request, 'front/home.html', {'site': site, 'news': news, 'cat': cat, 'subcat': subcat, 'lastnews': lastnews })
+  return render(request, 'front/home.html', context)
   
 def about(request):
   # sitename = "MySite | About"

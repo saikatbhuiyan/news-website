@@ -12,7 +12,7 @@
 {% block mainblock %}
 
 
-  {% for i in news %}
+  {% for i in shownews %}
 
 
     <!-- Breadcrumb -->
@@ -50,7 +50,7 @@
               <!-- Blog Detail -->
               <div class="p-b-70">
                 <a href="#" class="f1-s-10 cl2 hov-cl10 trans-03 text-uppercase">
-                  Technology
+                  {{ i.catname }}
                 </a>
 
                 <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
@@ -176,35 +176,15 @@
                 </div>
 
                 <ul class="p-t-35">
-                  <li class="how-bor3 p-rl-4">
-                    <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-                      Fashion
-                    </a>
-                  </li>
-
-                  <li class="how-bor3 p-rl-4">
-                    <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-                      Beauty
-                    </a>
-                  </li>
-
-                  <li class="how-bor3 p-rl-4">
-                    <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-                      Street Style
-                    </a>
-                  </li>
-
-                  <li class="how-bor3 p-rl-4">
-                    <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-                      Life Style
-                    </a>
-                  </li>
-
-                  <li class="how-bor3 p-rl-4">
-                    <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-                      DIY & Crafts
-                    </a>
-                  </li>
+                  {% for cc in cat %}
+                    {% if cc.count != 0 %}
+                      <li class="how-bor3 p-rl-4">
+                        <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+                          {{ cc.name }} ({{ cc.count }})
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
                 </ul>
               </div>
 
