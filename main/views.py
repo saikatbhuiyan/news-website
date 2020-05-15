@@ -34,8 +34,23 @@ def home(request):
 def about(request):
   # sitename = "MySite | About"
   site = Main.objects.get(pk=1)
+  news = News.objects.all().order_by('-pk')
+  cat = Category.objects.all()
+  subcat = SubCat.objects.all()
+  lastnews = News.objects.all().order_by('-pk')[:3]
+  popnews2 = News.objects.all().order_by('-show')[:3]
 
-  return render(request, 'front/about.html', {'site': site})
+
+  context = {
+    'site': site,
+    'news': news,
+    'cat': cat,
+    'subcat': subcat,
+    'lastnews': lastnews,
+    'popnews2': popnews2,
+  }
+
+  return render(request, 'front/about.html',  context)
 
 @login_required(login_url='/login/')
 def panel(request):
@@ -146,3 +161,12 @@ def site_setting(request):
   site = Main.objects.get(pk=1)
 
   return render(request, 'back/setting.html', {'site': site})
+
+@login_required(login_url='/login/')
+def about_setting(request):
+
+  about = Main.objects.get(pk=1).abouttxt
+
+  return render(request, 'back/about_setting.html', {'about': about})
+
+
