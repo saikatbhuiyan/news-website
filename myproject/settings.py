@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'news',
     'cat',
     'subcat',
+    'contact',
 ]
 
 MIDDLEWARE = [

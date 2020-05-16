@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('news.urls')),
     path('', include('cat.urls')),
     path('', include('subcat.urls')),
+    path('', include('contact.urls')),
 
 ]
 
