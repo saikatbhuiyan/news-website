@@ -1,5 +1,5 @@
 
-{% extends 'back/master.html' %}
+{% extends 'back/base.html' %}
 {% load staticfiles %}
 
 
@@ -32,7 +32,7 @@
             <thead>
                 <tr>
                     <th class="text-center">ID</th>
-                    <th>Date & Time</th>
+                    <!-- <th>Date & Time</th> -->
                     <th>Name</th>
                     <th>Email</th>
                     <th>Message</th>
@@ -45,7 +45,7 @@
                 {% for cc in msg %}
                 <tr>
                     <td class="text-center">{{cc.pk}}</td>
-                    <td>{{cc.date}} | {{cc.time}}</td>
+                    <!-- <td>{{cc.date}} | {{cc.time}}</td> -->
                     <td>{{cc.name}}</td>
                     <td>{{cc.email}}</td>
                     <td>{{cc.txt}}</td>

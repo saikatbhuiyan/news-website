@@ -40,8 +40,8 @@ def contact_add(request):
         if name == "" or email == "" or txt == "" :
             msg = "All Fields Requirded"
             return render(request, 'front/msgbox.html', {'msg':msg})
-
-        b = Contact(name=name, email=email, txt=txt, date=today, time=time)
+#date=today, time=time
+        b = Contact(name=name, email=email, txt=txt,)
         b.save()
         msg = "Your Message Receved"
         return render(request, 'front/msgbox.html', {'msg':msg})
